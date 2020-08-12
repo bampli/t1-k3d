@@ -1,0 +1,5 @@
+Flask==1.1.1
+mysql-connector==2.2.9
+ptvsd==4.3.2
+cassandra-driver==3.24.0
+# gremlinpython==3.4.7

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+      convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: seed
+  name: seed
+spec:
+  ports:
+  - name: "9042"
+    port: 9042
+    targetPort: 9042
+  selector:
+    io.kompose.service: seed
+status:
+  loadBalancer: {}

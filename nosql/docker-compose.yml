@@ -1,0 +1,37 @@
+version: '2'
+services:
+  seed:
+    image: datastax/dse-server:6.8.1
+    command: [ -s -g ]
+    container_name: seed
+    environment:
+      - DS_LICENSE=accept
+      - "STUDIO_JVM_ARGS=-Xms2g -Xmx4g -Djava.io.tmpdir=/tmp"
+    # Allow DSE to lock memory with mlock
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      memlock: -1
+    ports:
+    - "9042:9042"
+    volumes:
+    - "./data:/var/lib/cassandra"
+    networks:
+      - graph
+  node:
+    image: datastax/dse-server:6.8.1
+    command: [ -s -g ]
+    container_name: node
+    environment:
+      - DS_LICENSE=accept
+      - "STUDIO_JVM_ARGS=-Xms2g -Xmx4g -Djava.io.tmpdir=/tmp"
+      - SEEDS=seed
+    links:
+      - seed
+    # Allow DSE to lock memory with mlock
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      memlock: -1
+    networks:
+      - graph
